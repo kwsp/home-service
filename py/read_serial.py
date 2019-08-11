@@ -1,11 +1,16 @@
 import serial
 import time
+import datetime
 import sys
 import os
 import glob
 import struct
 import binascii
+import chart_studio
+import chart_studio.plotly as py
+from plotly.graph_objs import Scatter, Layout, Figure
 
+# Initialise Serial
 serialPortFound = False
 
 if sys.platform == 'linux':
@@ -32,7 +37,6 @@ if not serialPortFound:
 
 
 curr_date = time.strftime('%Y%m%d')
-
 curr_file = open('/home/pi/home-service/data/{}.txt'.format(curr_date), 'ab')
 
 while True:
@@ -43,8 +47,8 @@ while True:
 
         packed = struct.pack("<If", int(time.time()), float(raw))
         curr_file.write(binascii.b2a_base64(packed))
-        break # for running with Cron
-        time.sleep(60)
+        # break # for running with Cron
+        time.sleep(5)
     else:
         curr_file.close()
         curr_date = time.strftime('%Y%m%d')
