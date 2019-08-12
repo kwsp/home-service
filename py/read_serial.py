@@ -32,19 +32,24 @@ for port in ports:
 if not serialPortFound:
     sys.exit()
 
+def getData():
+    dev.flushInput()
+    dev.write(str.encode('?\n'))
+    raw = dev.readline().decode().strip()
+    dev.write(str.encode('?\n'))
+    return dev.readline().decode().strip()
 
 curr_date = time.strftime('%Y%m%d')
 curr_file = open('/home/pi/home-service/data/{}.txt'.format(curr_date), 'ab')
 
 while True:
     if curr_date == time.strftime('%Y%m%d'):
-        raw = dev.readline().decode().strip()
+        raw = getData()
         timestamp = time.strftime('%H%M%S')
         print(timestamp + " " + raw)
-
         packed = struct.pack("<If", int(time.time()), float(raw))
         curr_file.write(binascii.b2a_base64(packed))
-        # break # for running with Cron
+        break # for running with Cron
         time.sleep(5)
     else:
         curr_file.close()

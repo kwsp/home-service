@@ -2,8 +2,6 @@ import glob
 import struct
 import binascii
 from datetime import datetime
-import pandas as pd
-import matplotlib.pyplot as plt
 
 def unpack(fmat, data, index):
     unpackedStuff = struct.unpack_from(fmat, data, index)
@@ -29,8 +27,7 @@ for i, line in enumerate(inFile):
     timestamp.append(time)
     datetime_.append(datetime.fromtimestamp(time))
     temperature.append(temp)
+    print(str(time) + " " + str(temp))
 
-plt.plot(datetime_, temperature)
-plt.show()
 
 import pdb; pdb.set_trace()
