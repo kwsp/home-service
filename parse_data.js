@@ -21,12 +21,13 @@ function parseDataLine(line) {
    }
    [data.time, data.temperature] = dataStruct.unpack_from(bytes.buffer, 0);
    data.time = dateFormat(new Date(data.time*1000));
+   data.temperature = Number.parseFloat(data.temperature).toPrecision(4);
    return data;
 }
 
 async function parseFile (file) {
    return new Promise(resolve => {
-      let raw;
+      let parsedLine;
       let sensorData = {
          time: [],
          temperature: []
@@ -37,9 +38,13 @@ async function parseFile (file) {
       const stream = fs.createReadStream(file, {encoding: 'utf-8'});
       stream.on('data', data => {
          data.split(/\n/).forEach(function (item, index) {
-            raw = parseDataLine(item);
-            sensorData.time.push(raw.time);
-            sensorData.temperature.push(raw.temperature);
+            parsedLine = parseDataLine(item);
+            if (parseInt(parsedLine.time.slice(0,4)) >= 2019 &&
+                parsedLine.temperature > 0 &&
+                parsedLine.temperature < 50) {
+               sensorData.time.push(parsedLine.time);
+               sensorData.temperature.push(parsedLine.temperature);
+            }
          });
          stream.destroy();
       });

@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
    // get latest datafile and parse
    parseFiles(getNewestDataFile())
    socket.emit('update-data', sensorData);
-   
+
    socket.on('get-new-data', function(){
       // get latest datafile and parse
       parseFiles(getNewestDataFile())
@@ -46,7 +46,7 @@ io.on('connection', function(socket) {
       console.log('user disconnected');
    });
 
-   socket.on('chat message', function(msg) {
-      console.log('message: ' + msg);
-   });
+   // socket.on('chat message', function(msg) {
+   //    console.log('message: ' + msg);
+   // });
 });
