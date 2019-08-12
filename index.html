@@ -1,19 +1,120 @@
+<!doctype html>
 <html>
-   <head>
-      <meta charset="utf-8">
-   </head>
-   <body>
+<head>
+   <meta charset="utf-8">
+   <!-- Botstrap & custom CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel="stylesheet" href="css/custom.css">
 
-      <div id="data">
-         <p id="current_data">var</p>
-         <button id="button">refresh</button>
+   <title>IoT@Tiger</title>
+
+</head>
+<body>
+   <head>
+
+   </head>
+   <main role="main" class="container-fluid h-100 d-flex flex-column pb-5">
+      <!-- Data -->
+      <div class="container-fluid">
+         <div id="graphTemperature"></div>
+         <p id="temperatureStatus">N/A</div>
+         <button id='refresh-data'>Refresh</button>
       </div>
 
-      
+      <!-- Chat -->
+      <div id="message-div">
+         <ul id="messages"></ul>
+         <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+         </form>
+      </div>
+
+   </main>
+
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-	
-	<script src="js/read_temp.js"></script>
-	</body>
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+   <script src="/socket.io/socket.io.js"></script>
+   <!-- Latest compiled and minified plotly.js JavaScript -->
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+   <script>
+   var layout = {
+      title: {
+         text:'Temperature',
+         font: {
+            // family: 'Courier New, monospace',
+            size: 24
+         },
+         xref: 'paper',
+         x: 0.05,
+      },
+      xaxis: {
+         autorange: true,
+         title: {
+            text: 'Timestamp',
+            font: {
+               // family: 'Courier New, monospace',
+               size: 18,
+               // color: '#7f7f7f'
+            }
+         },
+         range: ['2019-08-11 00-00-00', '2019-08-11 23-59-59'],
+         rangeslider: {range: ['2019-08-11 00-00-00', '2019-08-11 23-59-59']},
+         type: 'time'
+      },
+      yaxis: {
+         title: {
+            text: 'Temperature',
+            font: {
+               // family: 'Courier New, monospace',
+               size: 18,
+               // color: '#7f7f7f'
+            },
+         autorange: true,
+         range: [15, 30],
+         }
+      }
+   };
+   Plotly.newPlot('graphTemperature', [], layout, {responsive: true});
+
+   function updatePlot(id, data) {
+      var graph = $(id)[0];
+      graph.data = data;
+      graph.layout.xaxis.range = [];
+      Plotly.redraw(graph);
+      Plotly.Plots.resize(graph);
+   }
+   // Socket Client
+   $(function() {
+      var socket = io();
+      socket.on('update-data', function (data) {
+         trace1 = {
+            type: 'scatter',
+            x: data.time,
+            y: data.temperature,
+         }
+         var str = "Current Temperature: " + data.temperature[data.temperature.length-1]
+            + "C, sampled at " + data.time[data.time.length-1];
+         document.getElementById('temperatureStatus').innerHTML =str;
+         socket.emit('acknowledge-data', { my: 'index.html received data!' });
+         var data = [ trace1 ];
+         updatePlot("#graphTemperature", data);
+      });
+
+      $('form').submit(function(e){
+         e.preventDefault(); // prevent page reloading
+         socket.emit('chat message', $('#m').val());
+         $('#m').val('');
+         return false;
+      });
+
+      $('#refresh-data').click(function(e){
+         e.preventDefault();
+         socket.emit('get-new-data')
+      })
+   })
+   </script>
+
+</body>
 </html>

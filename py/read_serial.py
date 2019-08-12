@@ -6,9 +6,6 @@ import os
 import glob
 import struct
 import binascii
-import chart_studio
-import chart_studio.plotly as py
-from plotly.graph_objs import Scatter, Layout, Figure
 
 # Initialise Serial
 serialPortFound = False

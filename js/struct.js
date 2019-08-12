@@ -1,6 +1,6 @@
 /* From
 
-http://github.com/lyngklip/structjs
+https://github.com/lyngklip/structjs
 License: MIT
 
 */
@@ -55,7 +55,7 @@ const struct = format => {
         return b
     }
     const unpack = arrb => unpack_from(arrb, 0)
-    function* iter_unpack(arrb) { 
+    function* iter_unpack(arrb) {
         for (let offs = 0; offs + size <= arrb.byteLength; offs += size) {
             yield unpack_from(arrb, offs);
         }
@@ -63,3 +63,5 @@ const struct = format => {
     return Object.freeze({
         unpack, pack, unpack_from, pack_into, iter_unpack, format, size})
 }
+
+module.exports.struct = struct;
