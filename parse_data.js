@@ -21,7 +21,6 @@ function parseDataLine(line) {
    }
    [data.time, data.temperature] = dataStruct.unpack_from(bytes.buffer, 0);
    data.time = dateFormat(new Date(data.time*1000));
-   console.log(data.time);
    return data;
 }
 
