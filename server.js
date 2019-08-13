@@ -1,9 +1,8 @@
 #!/usr/bin node
 const express = require('express')
 const app = express();
-const http = require('http');
-const https = require('https');
-const io = require('socket.io')(https);
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 const url = require('url');
 const fs = require('fs');
 
@@ -21,10 +20,10 @@ const {getNewestDataFile, listDataDir, parseFile} = require('./parse_data.js');
 //};
 
 //const server = https.createServer(credentials, app);
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
 // Initialise https Server and home page
-server.listen(6969, function() {
+http.listen(6969, function() {
    console.log('listening on *:6969')
 });
 app.get('/', function(req, res) {
