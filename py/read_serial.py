@@ -2,7 +2,6 @@ import serial
 import time
 import datetime
 import sys
-import os
 import glob
 import struct
 import binascii
@@ -40,7 +39,7 @@ def getData():
     return dev.readline().decode().strip()
 
 curr_date = time.strftime('%Y%m%d')
-curr_file = open('/home/pi/home-service/data/{}.txt'.format(curr_date), 'ab')
+curr_file = open('../data/{}.txt'.format(curr_date), 'ab')
 
 while True:
     if curr_date == time.strftime('%Y%m%d'):
@@ -54,7 +53,7 @@ while True:
     else:
         curr_file.close()
         curr_date = time.strftime('%Y%m%d')
-        curr_file = open('/home/pi/home-service/data/{}.txt'.format(curr_date), 'wb')
+        curr_file = open('../data/{}.txt'.format(curr_date), 'wb')
 
 curr_file.close()
 

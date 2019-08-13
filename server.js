@@ -1,15 +1,28 @@
 #!/usr/bin node
 const express = require('express')
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const https = require('https');
+const io = require('socket.io')(https);
 const url = require('url');
 const fs = require('fs');
 
 const {getNewestDataFile, listDataDir, parseFile} = require('./parse_data.js');
 
-// Initialise HTTP Server and home page
-http.listen(6969, function() {
+
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/tigernie.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/tigernie.com/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/tigernie.com/chain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
+const httpsServer = https.createServer(credentials, app);
+
+// Initialise https Server and home page
+httpsServer.listen(6969, function() {
    console.log('listening on *:6969')
 });
 app.get('/', function(req, res) {
