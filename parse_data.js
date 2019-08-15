@@ -31,7 +31,8 @@ async function parseFile (file) {
       let parsedLine;
       let sensorData = {
          time: [],
-         temperature: []
+         temperature: [],
+         activity: [],
       };
       // const label = `read2-${file}`;
       // console.time(label);
