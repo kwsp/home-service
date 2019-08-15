@@ -40,6 +40,10 @@
       <div class="container-fluid">
          <div id="graphTemperature"></div>
          <p id="temperatureStatus">Loading graphs. . .</div>
+
+         <div id="graphActivity"></div>
+         <p id="activityStatus">Loading graphs. . .</div>
+
          <button id='refresh-data'>Refresh</button>
       </div>
 
@@ -104,6 +108,7 @@
    };
    Plotly.newPlot('graphTemperature', [], layout, {responsive: true});
 
+
    function updatePlot(id, data) {
       var graph = $(id)[0];
       graph.data = data;
@@ -111,6 +116,47 @@
       Plotly.redraw(graph);
       Plotly.Plots.resize(graph);
    }
+
+   var layout = {
+      title: {
+         text:'Activity',
+         font: {
+            // family: 'Courier New, monospace',
+            size: 24
+         },
+         xref: 'paper',
+         x: 0.05,
+      },
+      xaxis: {
+         autorange: true,
+         title: {
+            text: 'Timestamp',
+            font: {
+               // family: 'Courier New, monospace',
+               size: 18,
+               // color: '#7f7f7f'
+            }
+         },
+         range: ['2019-08-11 00-00-00', '2019-08-11 23-59-59'],
+         rangeslider: {range: ['2019-08-11 00-00-00', '2019-08-11 23-59-59']},
+         type: 'time'
+      },
+      yaxis: {
+         title: {
+            text: 'Activity',
+            font: {
+               // family: 'Courier New, monospace',
+               size: 18,
+               // color: '#7f7f7f'
+            },
+         autorange: true,
+         range: [0, 100],
+         }
+
+      }
+   };
+   Plotly.newPlot('graphActivity', [], layout, {responsive: true});
+
    // Socket Client
    $(function() {
       var socket = io();
@@ -123,9 +169,20 @@
          var str = "Current Temperature: " + data.temperature[data.temperature.length-1]
             + "C, sampled at " + data.time[data.time.length-1];
          document.getElementById('temperatureStatus').innerHTML =str;
-         socket.emit('acknowledge-data', { my: 'index.html received data!' });
          var data = [ trace1 ];
          updatePlot("#graphTemperature", data);
+
+         trace2 = {
+            type: 'scatter',
+            x: data.time,
+            y: data.activity,
+         }
+         var str = "Current Activity: " + data.activity;
+         document.getElementById('activityStatus').innerHTML =str;
+         var data = [ trace2 ];
+         updatePlot("#graphActivity", data);
+
+         socket.emit('acknowledge-data', { my:'index.html received data!'});
       });
 
       $('form').submit(function(e){

@@ -20,7 +20,7 @@ if not ports:
 for port in ports:
     try:
         dev = serial.Serial(port=port,
-                            baudrate=9600,
+                            baudrate=115200,
                             timeout=2,
                             writeTimeout=0)
         serialPortFound = True
@@ -43,10 +43,13 @@ curr_file = open('../data/{}.txt'.format(curr_date), 'ab')
 
 while True:
     if curr_date == time.strftime('%Y%m%d'):
-        raw = getData()
+        raw = getData().split(',')
+        temperature = raw[0]
+        activity = raw[1]
         timestamp = time.strftime('%H%M%S')
-        print(timestamp + " " + raw)
-        packed = struct.pack("<If", int(time.time()), float(raw))
+
+        print(timestamp + " " + temperature + " " + activity)
+        packed = struct.pack("<IfI", int(time.time()), float(temperature), int(activity))
         curr_file.write(binascii.b2a_base64(packed))
         break # for running with Cron
         time.sleep(5)

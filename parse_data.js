@@ -8,10 +8,11 @@ const struct = require('./js/struct.js').struct;
 const readFile = util.promisify(fs.readFile);
 const readdir = util.promisify(fs.readdir);
 
-const dataStruct = struct("<If");
+const dataStruct = struct("<IfI");
 
 const dateFormat = d3.timeFormat('%Y-%m-%d %H:%M:%S');
 const dateFormatShort = d3.timeFormat('%H:%M');
+
 function parseDataLine(line) {
    let data = {}
    let binary_string = atob(line);
@@ -19,7 +20,7 @@ function parseDataLine(line) {
    for (let i = 0; i < dataStruct.size; i++) {
       bytes[i] = binary_string.charCodeAt(i);
    }
-   [data.time, data.temperature] = dataStruct.unpack_from(bytes.buffer, 0);
+   [data.time, data.temperature, data.activity] = dataStruct.unpack_from(bytes.buffer, 0);
    data.time = dateFormat(new Date(data.time*1000));
    data.temperature = Number.parseFloat(data.temperature).toPrecision(4);
    return data;
@@ -41,9 +42,11 @@ async function parseFile (file) {
             parsedLine = parseDataLine(item);
             if (parseInt(parsedLine.time.slice(0,4)) >= 2019 &&
                 parsedLine.temperature > 0 &&
-                parsedLine.temperature < 50) {
+                parsedLine.temperature < 50)
+            {
                sensorData.time.push(parsedLine.time);
                sensorData.temperature.push(parsedLine.temperature);
+               sensorData.activity.push(parsedLine.activity);
             }
          });
          stream.destroy();
