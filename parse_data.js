@@ -2,17 +2,16 @@ const fs = require('fs');
 const util = require('util');
 const atob = require('atob');
 const d3 = require('d3');
-
 const struct = require('./js/struct.js').struct;
-
 const readFile = util.promisify(fs.readFile);
 const readdir = util.promisify(fs.readdir);
 
-const dataStruct = struct("<IfI");
 
+const dataStruct = struct("<IfI");
 const dateFormat = d3.timeFormat('%Y-%m-%d %H:%M:%S');
 const dateFormatShort = d3.timeFormat('%H:%M');
 
+// Parse a single base64 ecoded line of data
 function parseDataLine(line) {
    let data = {}
    let binary_string = atob(line);
@@ -26,6 +25,7 @@ function parseDataLine(line) {
    return data;
 }
 
+// Parse one base64 encoded .txt file
 async function parseFile (file) {
    return new Promise(resolve => {
       let parsedLine;
@@ -38,9 +38,12 @@ async function parseFile (file) {
       // console.time(label);
 
       const stream = fs.createReadStream(file, {encoding: 'utf-8'});
+       // create the data scream
       stream.on('data', data => {
          data.split(/\n/).forEach(function (item, index) {
+             // parse each line
             parsedLine = parseDataLine(item);
+             // check for validity of data
             if (parseInt(parsedLine.time.slice(0,4)) >= 2019 &&
                 parsedLine.temperature > 0 &&
                 parsedLine.temperature < 50)
@@ -49,6 +52,7 @@ async function parseFile (file) {
                sensorData.temperature.push(parsedLine.temperature);
                sensorData.activity.push(parsedLine.activity);
             }
+             
          });
          stream.destroy();
       });
@@ -60,11 +64,13 @@ async function parseFile (file) {
    });
 }
 
+
 async function parseFiles(file) {
       console.log(file);
       let sensorData = await parseFile(file);
       console.log(sensorData)
 }
+
 
 const listDir = source =>
    fs.readdirSync(source)
@@ -74,17 +80,20 @@ const listDir = source =>
 // var data_dir = __dirname + '/data';
 // console.log(listDir(data_dir));
 
+
 const listDataDir = () =>
    fs.readdirSync(__dirname.concat('/data'))
       .filter(file => /\d+\.txt/.test(file))
       .map(el => 'data/' + el);
+
 
 const getNewestDataFile = () =>
    fs.readdirSync(__dirname.concat('/data'))
       .filter(file => /\d+\.txt/.test(file))
       .map(el => 'data/' + el)
       .sort().slice(-1)[0];
-//
+
+
 var filePath = getNewestDataFile()
 console.log(filePath)
 
