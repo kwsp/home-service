@@ -1,162 +1,74 @@
 <!doctype html>
+<html lang="en">
+
 <html>
 <head>
-   <meta charset="utf-8">
-   <!-- Botstrap & custom CSS -->
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel="stylesheet" href="css/custom.css">
-   <!-- Latest compiled and minified plotly.js JavaScript -->
-   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-   <title>Tiger IoT</title>
+    <meta charset="utf-8">
+    <!-- Botstrap & custom CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Latest compiled and minified plotly.js JavaScript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/timeSeriesPlot.js"></script>
+    
+    
+    <title>Tiger IoT</title>
 </head>
 <body>
-   <header class="mb-0 pb-0">
-      <!-- Navigation -->
-      <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
+    <header class="mb-0 pb-0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
 
         <div class="container-fluid">
-          <a class="navbar-brand d-flex flex-f" href="http://home.TigerNie.com">home.TigerNie.com</a>
+            <a class="navbar-brand d-flex flex-f" href="https://home.TigerNie.com">home.TigerNie.com</a>
 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-           <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-           <div class="navbar-nav ml-auto">
-             <a class="nav-item nav-link active" href="#">Home</a>
-             <!-- <a class="nav-item nav-link" href="pages/about.html">About Me</a>
-             <a class="nav-item nav-link" href="#">Skills & Education</a>
-             <a class="nav-item nav-link" href="#">Portfolio</a>
-             <a class="nav-item nav-link" href="#">Contact</a>
-             <a class="nav-item nav-link" href="#">Resume</a> -->
-           </div>
-          </div>
-
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-item nav-link active" href="#">Home</a>
+                    <a class="nav-item nav-link" href="#">Theres</a>
+                    <a class="nav-item nav-link" href="#">Not</a>
+                    <a class="nav-item nav-link" href="#">Much</a>
+                    <a class="nav-item nav-link" href="#">Here</a>
+                    <a class="nav-item nav-link" href="#">Yet</a>
+                </div>
+            </div>
         </div>
-      </nav>
-      <!-- end of navigation -->
-   </header>
+        </nav>
+        <!-- end of navigation -->
+    </header>
 
+    <main role="main" class="container-fluid h-100 d-flex flex-column pb-5">
+        <!-- Data -->
+        <div class="row no-gutters">
+            <div class="col">
+                <div id="graphTemperature"></div>
+                <p id="temperatureStatus">Loading graphs. . .</p>
+            </div>
 
-   <main role="main" class="container-fluid h-100 d-flex flex-column pb-5">
-      <!-- Data -->
-      <div class="row no-gutters">
-         <div class="col">
-            <div id="graphTemperature"></div>
-            <p id="temperatureStatus">Loading graphs. . .</p>
-         </div>
+            <div class="col">
+                <div id="graphActivity"></div>
+                <p id="activityStatus">Loading graphs. . .</p>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <button id='refresh-data'>Refresh</button>
+            <button id='back-button'>Back</button>
+            <button id='next-button'>Next</button>
+        </div>
 
-         <div class="col">
-            <div id="graphActivity"></div>
-            <p id="activityStatus">Loading graphs. . .</p>
-         </div>
-      </div>
-      <div class="row no-gutters">
-         <button id='refresh-data'>Refresh</button>
-      </div>
-
-      <!-- Chat -->
-      <!-- <div id="message-div">
-         <ul id="messages"></ul>
-         <form action="">
-            <input id="m" autocomplete="off" /><button>Send</button>
-         </form>
-      </div> -->
-   </main>
-
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-   <script src="/socket.io/socket.io.js"></script>
-   <script src="./js/timeSeriesPlot.js"></script>
-   <script type="text/JavaScript">
-   // // Plots
-   // // TODO: Move time series plot to new .js file.
-   // // TODO: Add navigation between dates.
-
-   var layout = {
-      title: {
-         text:'Activity',
-         font: {
-            // family: 'Courier New, monospace',
-            size: 24
-         },
-         xref: 'paper',
-         x: 0.05,
-      },
-      xaxis: {
-         autorange: true,
-         title: {
-            text: 'Timestamp',
-            font: {
-               // family: 'Courier New, monospace',
-               size: 14,
-               // color: '#7f7f7f'
-            }
-         },
-         range: ['2019-08-11 00-00-00', '2019-08-11 23-59-59'],
-         rangeslider: {range: ['2019-08-11 00-00-00', '2019-08-11 23-59-59']},
-         type: 'time'
-      },
-      yaxis: {
-         title: {
-            text: 'Activity',
-            font: {
-               // family: 'Courier New, monospace',
-               size: 14,
-               // color: '#7f7f7f'
-            },
-         autorange: true,
-         range: [0, 100],
-         }
-
-      }
-   };
-   Plotly.newPlot('graphActivity', [], layout, {responsive: true});
-
-   timeSeriesPlot('graphTemperature', 'Temperature', [],
-                  {x_label:'Timestamp', y_label:'Temperature'});
-   // Socket Client
-   $(function() {
-      var socket = io();
-      socket.on('update-data', function (data) {
-         trace1 = {
-            // type: 'scatter',
-            x: data.time,
-            y: data.temperature,
-         }
-
-         trace2 = {
-            x: data.time,
-            y: data.activity,
-         }
-
-         var str = "Current Temperature: " + data.temperature[data.temperature.length-1]
-            + "C, sampled at " + data.time[data.time.length-1];
-         document.getElementById('temperatureStatus').innerHTML =str;
-
-         var str = "Current Activity: " + data.activity[data.activity.length-1];
-         document.getElementById('activityStatus').innerHTML =str;
-
-         updatePlot('#graphTemperature', [ trace1 ]);
-         updatePlot("#graphActivity", [ trace2 ]);
-
-         socket.emit('acknowledge-data', { my:'index.html received data!'});
-      });
-
-      $('form').submit(function(e){
-         e.preventDefault(); // prevent page reloading
-         socket.emit('chat message', $('#m').val());
-         $('#m').val('');
-         return false;
-      });
-      document.getElementById('refresh-data').onclick = function(){
-         socket.emit('get-new-data');
-         console.log("asking for data");
-      }
-
-   })
-   </script>
-
+        <!-- Chat -->
+        <!-- <div id="message-div">
+            <ul id="messages"></ul>
+            <form action="">
+                <input id="m" autocomplete="off" /><button>Send</button>
+            </form>
+        </div> -->
+    </main>
+    <script src="./main.js"></script>
 </body>
 </html>
