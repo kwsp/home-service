@@ -42,15 +42,18 @@ async function parseFile (file) {
       stream.on('data', data => {
          data.split(/\n/).forEach(function (item, index) {
              // parse each line
-            parsedLine = parseDataLine(item);
-             // check for validity of data
-            if (parseInt(parsedLine.time.slice(0,4)) >= 2019 &&
-                parsedLine.temperature > 0 &&
-                parsedLine.temperature < 50)
-            {
-               sensorData.time.push(parsedLine.time);
-               sensorData.temperature.push(parsedLine.temperature);
-               sensorData.activity.push(parsedLine.activity);
+            // parse every 10th line :) decimation!
+            if (index % 10 == 0) {
+               parsedLine = parseDataLine(item);
+                // check for validity of data
+               if (parseInt(parsedLine.time.slice(0,4)) >= 2019 &&
+                   parsedLine.temperature > 0 &&
+                   parsedLine.temperature < 50)
+               {
+                  sensorData.time.push(parsedLine.time);
+                  sensorData.temperature.push(parsedLine.temperature);
+                  sensorData.activity.push(parsedLine.activity);
+               }
             }
              
          });
