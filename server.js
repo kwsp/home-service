@@ -14,7 +14,7 @@ http.listen(6969, function() {
     console.log('listening on *:6969')
 });
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(__dirname + '/index2.html')
 });
 app.use(express.static(__dirname));
 

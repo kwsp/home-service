@@ -1,47 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
-<html>
 <head>
     <meta charset="utf-8">
-    <!-- Botstrap & custom CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/custom.css">
-    <!-- Latest compiled and minified plotly.js JavaScript -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/jquery-3.4.1.min.js"></script>
-    <script src="./js/timeSeriesPlot.js"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     
     <title>Tiger IoT</title>
+    
+    <!-- Botstrap & custom CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/custom.css">
+
 </head>
-<body>
-    <header class="mb-0 pb-0">
-        <!-- Navigation -->
-        <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
 
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex flex-f" href="https://home.TigerNie.com">home.TigerNie.com</a>
+<body id="page-top">
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top">
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link active" href="#">Home</a>
-                    <a class="nav-item nav-link" href="#">Theres</a>
-                    <a class="nav-item nav-link" href="#">Not</a>
-                    <a class="nav-item nav-link" href="#">Much</a>
-                    <a class="nav-item nav-link" href="#">Here</a>
-                    <a class="nav-item nav-link" href="#">Yet</a>
-                </div>
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex flex-f" href="https://home.TigerNie.com">home.TigerNie.com</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link active" href="#">Home</a>
+
+                <a class="nav-item nav-link" href="#">Theres</a>
+                <a class="nav-item nav-link" href="#">Not</a>
+                <a class="nav-item nav-link" href="#">Much</a>
+                <a class="nav-item nav-link" href="#">Here</a>
+                <a class="nav-item nav-link" href="#">Yet</a>
             </div>
         </div>
-        </nav>
-        <!-- end of navigation -->
-    </header>
+    </div>
+    </nav>
+    <!-- end of navigation -->
 
+    
     <main role="main" class="container-fluid h-100 d-flex flex-column pb-5">
         <!-- Data -->
         <div class="row no-gutters">
@@ -69,6 +69,13 @@
             </form>
         </div> -->
     </main>
-    <script src="./main.js"></script>
+    
+    <!-- JavaScript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/timeSeriesPlot.js"></script>    
+    <script src="./client.js"></script>
 </body>
 </html>
