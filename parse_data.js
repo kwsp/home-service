@@ -42,8 +42,8 @@ async function parseFile (file) {
       stream.on('data', data => {
          data.split(/\n/).forEach(function (item, index) {
              // parse each line
-            // parse every 10th line :) decimation!
-            if (index % 10 == 0) {
+            // parse every 20th line :) decimation!
+            if (index % 20 == 0) {
                parsedLine = parseDataLine(item);
                 // check for validity of data
                if (parseInt(parsedLine.time.slice(0,4)) >= 2019 &&

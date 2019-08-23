@@ -23,7 +23,7 @@ $(function() {
         }
 
         var str = data.temperature[data.temperature.length-1]
-            + "C"
+            + " C"
         document.getElementById('temperatureStatus').innerHTML =str;
 
         var str = data.activity[data.activity.length-1];
