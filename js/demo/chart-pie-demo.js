@@ -29,14 +29,15 @@ function pieChart(id, dataset) {
       options: {
         maintainAspectRatio: false,
         tooltips: {
+          // TODO: fix text color (white right now)
           backgroundColor: "rgb(255,255,255)",
           bodyFontColor: "#858796",
           borderColor: '#dddfeb',
           borderWidth: 1,
           xPadding: 15,
           yPadding: 15,
-          displayColors: false,
-          caretPadding: 10,
+//          displayColors: false,
+//          caretPadding: 10,
         },
         legend: {
           display: false

@@ -120,7 +120,7 @@ function areaPlot(id, xlabel, ydata, label) {
           displayColors: false,
           intersect: false,
           mode: 'index',
-          caretPadding: 10,
+//          caretPadding: 10,
           callbacks: {
             label: function(tooltipItem, chart) {
               var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
