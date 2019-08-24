@@ -188,6 +188,7 @@
 
             <!-- Current Temperature Card -->
             <div class="col-xl-3 col-md-6 mb-4">
+              <a class="scroll-to-card rounded" href="#temperaturePlot">
               <div class="card border-left-success h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -201,6 +202,7 @@
                   </div>
                 </div>
               </div>
+              </a>
             </div>
 
             <!-- Progress bar card  -->
@@ -231,6 +233,7 @@
 
             <!-- Current Activity Card -->
             <div class="col-xl-3 col-md-6 mb-4">
+              <a class="scroll-to-card rounded" href="#activityPlot">
               <div class="card border-left-warning h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -244,6 +247,7 @@
                   </div>
                 </div>
               </div>
+              </a>
             </div>
           </div>
 
@@ -251,8 +255,9 @@
           <div class="row">
 
             <!-- Temperature Chart -->
+<!--            TODO: Fix the height of area plots-->
             <div class="col-xl-8 col-lg-6">
-              <div class="card mb-4">
+              <div class="card mb-4" id="temperaturePlot">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-yellow">Temperature Chart</h6>
@@ -271,7 +276,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area">
+                  <div class="chart-area pt-4 pb-2">
                     <canvas id="graphTemperature"></canvas>
                   </div>
                 </div>
@@ -280,7 +285,7 @@
               
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-6">
-              <div class="card mb-4">
+              <div class="card mb-4" id="pieCard">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-yellow">Language Breakdown</h6>
@@ -290,8 +295,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="dropdownMenuLink">
                       <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#pieCard" id="animate-pie">Animate</a>
+                      <a class="dropdown-item" href="#pieCard" id="animate-pie2">Animate2</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Something else here</a>
                     </div>
@@ -326,7 +331,7 @@
             
             <!-- Activity Chart -->
             <div class="col-lg-6">
-              <div class="card mb-4">
+              <div class="card mb-4" id="activityPlot">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-yellow">Activity Chart</h6>
@@ -440,13 +445,16 @@
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
+<!--  <script src="vendor/chart.js/Chart.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
 
   <!-- Update the current time-->
   <script type="text/javascript">
       document.getElementById("updateDate").innerHTML = (new Date()).toLocaleDateString();     document.getElementById("updateTime").innerHTML = (new Date()).toLocaleTimeString();
       
-      setInterval(function(){
+      setInterval(function(){ 
       document.getElementById("updateTime").innerHTML = (new Date()).toLocaleTimeString();}, 1000);
   </script>
 
@@ -454,7 +462,8 @@
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="./main.js"></script>
+  <script src="./main-client.js"></script>
+  <script src="./mixin.js"></script>
 </body>
 
 </html>

@@ -35,15 +35,15 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 //}
 
 
-function areaPlot(id, dataset) {
+function areaPlot(id, xlabel, ydata, label) {
     var ctx = $("#"+id);
     var myLineChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: dataset.x,
+        labels: xlabel,  
         datasets: [{
-          data: dataset.y,
-          label: dataset.label,
+          data: ydata,
+          label: label,
           lineTension: 0.3,
           backgroundColor: "rgba(78, 115, 223, 0.25)",
           borderColor: "rgba(78, 115, 223, 1)",
@@ -69,9 +69,8 @@ function areaPlot(id, dataset) {
         },
         scales: {
           xAxes: [{
+            type: 'time',
             time: {
-              unit: 'hour',
-              unitStepSize: 1,
               displayFormats: {
                 'day': 'MMM DD HH'
               }
@@ -85,6 +84,7 @@ function areaPlot(id, dataset) {
               fontColor: "rgb(234, 236, 244)",
             }
           }],
+          
           yAxes: [{
             ticks: {
               maxTicksLimit: 5,

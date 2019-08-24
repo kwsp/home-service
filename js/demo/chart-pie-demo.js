@@ -10,9 +10,11 @@ var dataset = {
     hoverBackgroundColor: ['#17a673', '#2e59d9', '#2c9faf', '#DBAD23'],
 }
 
+var myPieChart=[];
+
 function pieChart(id, dataset) {
     var ctx = document.getElementById(id);
-    var myPieChart = new Chart(ctx, {
+    myPieChart[0] = new Chart(ctx, {
       type: 'doughnut',
       data: {
         labels: dataset.labels,
@@ -45,3 +47,12 @@ function pieChart(id, dataset) {
 }
 
 pieChart('myPieChart', dataset);
+
+$('#animate-pie').on('click', function() {
+  var val = myPieChart[0].config.cutoutPercentage;
+  myPieChart[0].config.cutoutPercentage = val;
+  myPieChart[0].update();
+});
+$('#animate-pie2').on('click', function() {
+  myPieChart[0].update();
+});

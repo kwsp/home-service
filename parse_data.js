@@ -1,26 +1,32 @@
 const fs = require('fs');
 const util = require('util');
 const atob = require('atob');
-const d3 = require('d3');
+//const d3 = require('d3');
+const moment = require('moment');
 const struct = require('./js/struct.js').struct;
 const readFile = util.promisify(fs.readFile);
 const readdir = util.promisify(fs.readdir);
 
 
 const dataStruct = struct("<IfI");
-const dateFormat = d3.timeFormat('%Y-%m-%d %H:%M:%S');
-const dateFormatShort = d3.timeFormat('%H:%M');
+//const dateFormat = d3.timeFormat('%B %d %Y %H:%M:%S');
+//const dateFormat = d3.timeFormat('%YY%MM%d %H:%M');
+//const dateFormatShort = d3.timeFormat('%H:%M');
 
 // Parse a single base64 ecoded line of data
 function parseDataLine(line) {
-   let data = {}
+   var data = {
+     time: 0,
+     temperature: 0,
+     activity: 0,
+   }
    let binary_string = atob(line);
    let bytes = new Uint8Array(dataStruct.size);
    for (let i = 0; i < dataStruct.size; i++) {
       bytes[i] = binary_string.charCodeAt(i);
    }
-   [data.time, data.temperature, data.activity] = dataStruct.unpack_from(bytes.buffer, 0);
-   data.time = dateFormat(new Date(data.time*1000));
+   [data.time, data.temperature, data.activity] = dataStruct.unpack_from(bytes.buffer, 0);   
+   data.time = moment(data.time*1000).format('MM/DD/YY HH:mm')
    data.temperature = Number.parseFloat(data.temperature).toPrecision(4);
    return data;
 }
@@ -34,9 +40,9 @@ async function parseFile (file) {
          temperature: [],
          activity: [],
       };
+     
       // const label = `read2-${file}`;
       // console.time(label);
-
       const stream = fs.createReadStream(file, {encoding: 'utf-8'});
        // create the data scream
       stream.on('data', data => {
@@ -44,22 +50,14 @@ async function parseFile (file) {
              // parse each line
             // parse every 20th line :) decimation!
             if (index % 20 == 0) {
-               parsedLine = parseDataLine(item);
-                // check for validity of data
-               if (parseInt(parsedLine.time.slice(0,4)) >= 2019 &&
-                   parsedLine.temperature > 0 &&
-                   parsedLine.temperature < 50)
-               {
-                  sensorData.time.push(parsedLine.time);
-                  sensorData.temperature.push(parsedLine.temperature);
-                  sensorData.activity.push(parsedLine.activity);
-               }
+               data = parseDataLine(item);
+               sensorData.time.push(data.time);
+               sensorData.temperature.push(data.temperature);
+               sensorData.activity.push(data.activity);
             }
-             
          });
          stream.destroy();
       });
-
       stream.on('close', () => {
          // console.timeEnd(label);
          resolve(sensorData);
