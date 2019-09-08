@@ -13,38 +13,38 @@ var dataset = {
 var myPieChart=[];
 
 function pieChart(id, dataset) {
-    var ctx = document.getElementById(id);
-    myPieChart[0] = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: dataset.labels,
-        datasets: [{
-          data: dataset.data,
-          backgroundColor: dataset.backgroundColor,
-          borderColor: "rgb(234, 236, 244, 1)",
-          hoverBackgroundColor: dataset.hoverBackgroundColor,
-          hoverBorderColor: "rgba(234, 236, 244, 1)",
-        }],
-      },
-      options: {
-        maintainAspectRatio: false,
-        tooltips: {
-          // TODO: fix text color (white right now)
-          backgroundColor: "rgb(255,255,255)",
-          bodyFontColor: "#858796",
-          borderColor: '#dddfeb',
-          borderWidth: 1,
-          xPadding: 15,
-          yPadding: 15,
+  var ctx = document.getElementById(id);
+  myPieChart[0] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: dataset.labels,
+      datasets: [{
+        data: dataset.data,
+        backgroundColor: dataset.backgroundColor,
+        borderColor: "rgb(234, 236, 244, 1)",
+        hoverBackgroundColor: dataset.hoverBackgroundColor,
+        hoverBorderColor: "rgba(234, 236, 244, 1)",
+      }],
+    },
+    options: {
+      maintainAspectRatio: false,
+      tooltips: {
+        // TODO: fix text color (white right now)
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
 //          displayColors: false,
 //          caretPadding: 10,
-        },
-        legend: {
-          display: false
-        },
-        cutoutPercentage: 80,
       },
-    });
+      legend: {
+        display: false
+      },
+      cutoutPercentage: 80,
+    },
+  });
 }
 
 pieChart('myPieChart', dataset);
