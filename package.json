@@ -1,0 +1,32 @@
+{
+  "name": "tiger_iot_dash",
+  "version": "1.0.0",
+  "description": "Tiger's IoT Dashboard",
+  "scripts": {
+    "build": "npm install",
+    "start": "node server.js"
+  },
+  "pre-commit": [
+    "eslint"
+  ],
+  "dependencies": {
+    "atob": "^2.1.2",
+    "express": "4.17.1",
+    "moment": "2.24.0",
+    "socket.io": "2.2.*"
+  },
+  "devDependencies": {
+    "eslint": "^4.3.0"
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haolinnie/home-service.git"
+  },
+  "author": "Tiger Nie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haolinnie/home-service/issues"
+  },
+  "homepage": "https://github.com/haolinnie/home-service#readme"
+}
