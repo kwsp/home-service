@@ -15,6 +15,6 @@ activity = raw[1]
 
 # Write to DB
 record = (int(time.time()), round(temperature, 2), int(activity))
-c.execute('INSERT INTO sensor_data VALUES (?,?,?)', records)
+c.execute('INSERT INTO sensor_data VALUES (?,?,?)', record)
 connection.commit()
 connection.close()
