@@ -54,9 +54,12 @@ while True:
         timestamp = time.strftime('%H%M%S')
 
         print(timestamp + " " + temperature + " " + activity)
-        packed = struct.pack("<IfI", int(time.time()), float(temperature), int(activity))
+        packed = struct.pack("<IfI",
+                             int(time.time()),
+                             float(temperature),
+                             int(activity))
         curr_file.write(binascii.b2a_base64(packed))
-        break # for running with Cron
+        break  # for running with Cron
         time.sleep(5)
     else:
         curr_file.close()
@@ -64,4 +67,3 @@ while True:
         curr_file = open('../data/{}.txt'.format(curr_date), 'wb')
 
 curr_file.close()
-
