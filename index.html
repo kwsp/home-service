@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="Tiger Nie">
+  <meta name="description" content="Tiger's IoT Dashboard">
 
   <title>TigerIoT Dashboard</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="static/css/custom.min.css" rel="stylesheet">
 
 </head>
 
@@ -248,7 +246,7 @@
                 <div class="card-body">
                   <p>This website is a dashboard for my IoT devices at home. Currently this includes a thermister to monitor temperature and an accelerometer to monitor activity (which, as you'd imagine, is basically a very good random number generator). The list will surely expand in the future.</p>
                   <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_report_mx0a.svg" alt="">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="static/img/undraw_report_mx0a.svg" alt="">
                   </div>
                   <p class="mb-0">I built this website mostly for fun but also as a fullstack project. The front end is built with <a href="https://getbootstrap.com">Bootstrap</a> and <a href="https://jquery.com">jQuery</a> based on my modified version of the <a href="https://github.com/haolinnie/startbootstrap-sb-admin-2">SB Admin 2</a> theme. The backend is built with <a href="https://nodejs.org">Node.js</a> and <a href="https://socket.io">Socket.io</a> is used to pass data between the server and the client. The server is hosted with <a href="https://www.nginx.com">NGINX</a> on a Raspberry Pi 3B+ in my bedroom, which also controls the sensors through an Arduino. In the future I will implement the MQTT protocol to communicate with multiple IoT devices. </p>
                 </div>
@@ -284,14 +282,14 @@
 
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="static/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
 <!--  <script src="vendor/chart.js/Chart.min.js"></script>-->
@@ -324,11 +322,11 @@
   </script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
+  <script src="static/js/demo/chart-area-demo.js"></script>
+  <script src="static/js/demo/chart-pie-demo.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="./main-client.js"></script>
-  <script src="./mixin.js"></script>
+  <script src="static/js/main-client.js"></script>
+  <script src="static/mixin.js"></script>
 </body>
 
 </html>

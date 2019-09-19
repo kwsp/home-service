@@ -3,7 +3,7 @@ const util = require('util');
 const atob = require('atob');
 //const d3 = require('d3');
 const moment = require('moment');
-const struct = require('./js/struct.js').struct;
+const struct = require('./struct.js').struct;
 const readFile = util.promisify(fs.readFile);
 const readdir = util.promisify(fs.readdir);
 
