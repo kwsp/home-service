@@ -7,7 +7,7 @@ from get_db import db
 connection = db()
 c = connection.cursor()
 
-c.execute("SELECT * FROM sensor_data ORDER BY timestamp DESC LIMIT 5")
+c.execute("SELECT * FROM sensor_data ORDER BY timestamp DESC LIMIT 10")
 res = c.fetchall()
 
 print("Latest Data:")

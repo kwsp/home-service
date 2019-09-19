@@ -22,7 +22,7 @@ for port in ports:
                             baudrate=115200,
                             timeout=2,
                             writeTimeout=0)
-        # serialPortFound = True
+        serialPortFound = True
         print("Established connection with {}".format(port))
     except:
         pass

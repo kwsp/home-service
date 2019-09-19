@@ -4,4 +4,4 @@ py/__pycache__/
 
 
 node_modules/
-data/.db
+data/*.db
