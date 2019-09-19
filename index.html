@@ -13,7 +13,7 @@
   <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
+  <!-- Custom bootstrap styles for this template-->
   <link href="static/css/custom.min.css" rel="stylesheet">
 
 </head>
@@ -280,7 +280,6 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-
   <!-- Bootstrap core JavaScript-->
   <script src="static/vendor/jquery/jquery.min.js"></script>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -306,13 +305,7 @@
       setInterval(function() {
       $("#updateTime").html((new Date()).toLocaleTimeString());}, 1000);
     
-//    Clear alert badge
-      $("#alertsDropdown").click(function() {
-        $("#alertCount").html("");
-      })
-    
 //    Update progress bar
-      var scale = 17.7;
       var progress = 13.7/17.7;
       var left = Math.floor(scale - (progress * scale)) + " billion years  ";
       var progress = progress * 100;
@@ -322,11 +315,11 @@
   </script>
 
   <!-- Page level custom scripts -->
-  <script src="static/js/demo/chart-area-demo.js"></script>
-  <script src="static/js/demo/chart-pie-demo.js"></script>
+  <script src="static/js/chart-area.js"></script>
+  <script src="static/js/chart-pie.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="static/js/main-client.js"></script>
-  <script src="static/mixin.js"></script>
+  <script src="static/js/mixin.js"></script>
 </body>
 
 </html>
