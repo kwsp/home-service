@@ -1,6 +1,7 @@
 // // Plots
 // // TODO: Add navigation between dates.
 
+var debug_;
 $(function() {
   "use strict";
 
@@ -8,13 +9,14 @@ $(function() {
   var socket = io();
   socket.on('update-data', function (sensorData) {
     console.log("Received new data");
+    debug_ = sensorData;
 
     // Update cards
     var len = sensorData.time.length-1;
     var str = sensorData.temperature[len] + " C"
-    document.getElementById('temperatureStatus').innerHTML =str;
+    document.getElementById('temperatureStatus').innerHTML = str;
     var str = sensorData.activity[len];
-    document.getElementById('activityStatus').innerHTML =str;
+    document.getElementById('activityStatus').innerHTML = str;
 
     // Update plots
     areaPlot('graphTemperature', sensorData.time, sensorData.temperature, 'Temperature')
@@ -23,6 +25,9 @@ $(function() {
     // Acknowledge data to the server
     socket.emit('acknowledge-data', { my:'index.html received data!'});
   });
+
+  socket.emit('get-new-data');
+  console.log("asking for data");
 
   $('form').submit(function(e){
     e.preventDefault(); // prevent page reloading

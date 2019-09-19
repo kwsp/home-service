@@ -23,14 +23,14 @@ function areaPlot(id, xlabel, ydata, label) {
         lineTension: 0.3,
         backgroundColor: "rgba(78, 115, 223, 0.25)",
         borderColor: "rgba(78, 115, 223, 1)",
-        pointRadius: 3,
-        pointBackgroundColor: "rgba(78, 115, 223, 1)",
-        pointBorderColor: "rgba(78, 115, 223, 1)",
-        pointHoverRadius: 3,
-        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-        pointHitRadius: 10,
-        pointBorderWidth: 2,
+        pointRadius: 0,
+        // pointBackgroundColor: "rgba(78, 115, 223, 1)",
+        // pointBorderColor: "rgba(78, 115, 223, 1)",
+        // pointHoverRadius: 3,
+        // pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+        // pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+        // pointHitRadius: 10,
+        // pointBorderWidth: 2,
       }],
     },
     options: {
@@ -46,17 +46,16 @@ function areaPlot(id, xlabel, ydata, label) {
       scales: {
         xAxes: [{
           type: 'time',
-          time: {
-            displayFormats: {
-              'day': 'MMM DD HH'
-            }
-          },
+          // time: {
+          //   displayFormats: {
+          //     'day': 'MMM DD HH'
+          //   }
+          // },
           gridLines: {
             display: false,
             drawBorder: false
           },
           ticks: {
-            maxTicksLimit: 7,
             fontColor: "rgb(234, 236, 244)",
           }
         }],
@@ -66,10 +65,10 @@ function areaPlot(id, xlabel, ydata, label) {
             maxTicksLimit: 5,
             padding: 10,
             fontColor: "rgb(234, 236, 244)",
-            // // Include a dollar sign in the ticks
-            // callback: function(value, index, values) {
-            //   return value;
-            // }
+            // Include a dollar sign in the ticks
+            callback: function(value, index, values) {
+              return (value).toFixed(1);
+            }
           },
           gridLines: {
             color: "rgb(234, 236, 244)",

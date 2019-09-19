@@ -3,10 +3,12 @@ const express = require('express')
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-const url = require('url');
-const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
+const moment = require('moment');
+const util = require('util')
 
 const {getNewestDataFile, listDataDir, parseFile} = require('./parse_data.js');
+
 
 
 // Initialise https Server and home page
@@ -20,10 +22,39 @@ app.use(express.static(__dirname));
 
 
 // function for parsing sensor data
-var sensorData = {};
-async function parseFiles(file) {
-    sensorData = await parseFile(file);
-}
+// var sensorData = {};
+// async function parseFiles(file) {
+//     sensorData = await parseFile(file);
+// }
+
+// Connect to the database
+let db = new sqlite3.Database('data/tiger-home.db', (err) => {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log('Connected to the SQlite database.');
+});
+
+
+// Test fetch data
+
+var data_;
+db.serialize(() => {
+    let sensorData = {
+        time: [],
+        temperature: [],
+        activity: [],
+    };
+    db.each("SELECT timestamp, temperature, activity FROM sensor_data ORDER BY timestamp DESC LIMIT 1000",
+             function (err, row) {
+        if (err) { console.error(err.message); }
+        // console.log(row);
+        sensorData.time.push(row.timestamp);
+        sensorData.temperature.push(row.temperature);
+        sensorData.activity.push(row.activity);
+    });
+    data_ = sensorData;
+});
 
 
 // Socket.io setup
@@ -31,14 +62,26 @@ io.on('connection', function(socket) {
     console.log('a user connected');
 
     // get latest datafile and parse
-    parseFiles(getNewestDataFile())
-    socket.emit('update-data', sensorData);
-
-    // get latest datafile and parse
-
     socket.on('get-new-data', function(){
-        parseFiles(getNewestDataFile())
-        socket.emit('update-data', sensorData);
+
+        db.serialize(() => {
+            let sensorData = {
+                time: [],
+                temperature: [],
+                activity: [],
+            };
+            db.each("SELECT timestamp, temperature, activity FROM sensor_data ORDER BY timestamp DESC LIMIT 1000",
+                function (err, row) {
+                    if (err) { console.error(err.message); }
+                    
+                    sensorData.time.push(moment(row.timestamp * 1000).format('MM/DD/YY HH:mm'));
+                    sensorData.temperature.push(row.temperature);
+                    sensorData.activity.push(row.activity);
+                }, function () {
+                    socket.emit('update-data', sensorData);
+                });
+        });
+
     })
 
     socket.on('get-back-data', function() {
