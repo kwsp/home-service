@@ -6,17 +6,19 @@ import glob
 import struct
 import binascii
 
+
 # Initialise Serial
 serialPortFound = False
-
 if sys.platform == 'linux':
     ports = glob.glob('/dev/ttyACM*')
 elif sys.platform == 'darwin':
     ports = glob.glob('/dev/tty.usb*')
 
 if not ports:
-    print('No USB ports found')
+    print('[ERROR] No USB ports found')
 
+
+# Open Serial port to Arduino to read data
 for port in ports:
     try:
         dev = serial.Serial(port=port,
@@ -26,10 +28,12 @@ for port in ports:
         serialPortFound = True
         print("Established connection with {}".format(port))
     except:
-        None
+        pass
+
 
 if not serialPortFound:
     sys.exit()
+
 
 def getData():
     dev.flushInput()
@@ -37,6 +41,7 @@ def getData():
     raw = dev.readline().decode().strip()
     dev.write(str.encode('?\n'))
     return dev.readline().decode().strip()
+
 
 curr_date = time.strftime('%Y%m%d')
 curr_file = open('../data/{}.txt'.format(curr_date), 'ab')
