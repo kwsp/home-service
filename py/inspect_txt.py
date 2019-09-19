@@ -12,8 +12,9 @@ def unpack(fmat, data, index):
 files = glob.glob('../data/*.txt')
 
 files.sort()
+breakpoint()
 
-inFileName = files[0]
+inFileName = files[5]
 inFile = open(inFileName, 'rb')
 
 timestamp = []
@@ -30,6 +31,6 @@ for i, line in enumerate(inFile):
     datetime_.append(datetime.fromtimestamp(time))
     temperature.append(temp)
     activity.append(acti)
-    # print(str(time) + " " + str(temp))
+    print(str(time) + " T: " + str(temp) + " A:" + str(acti))
 
 breakpoint()

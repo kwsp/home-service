@@ -13,13 +13,14 @@ db_path = os.path.join(os.getcwd(),
 connection = sqlite3.connect(db_path)
 c = connection.cursor()
 # timestamp - integer - unix time
-# temperature - integer - 100*TempC
+# temperature - real - TempC
+# Activity - integer
 
 c.execute('''CREATE TABLE sensor_data
-             (timestamp integer, temperature integer, activity integer)''')
+             (timestamp integer, temperature real, activity integer)''')
 
 c.execute('''INSERT INTO sensor_data VALUES
-             (1568896927, 2312, 35)''')
+             (1568896927, 23.12, 35)''')
 
 # Look up
 c.execute('SELECT * FROM sensor_data')
@@ -33,4 +34,5 @@ for i in range(1000):
     records.append(
         (t, random.randrange(10, 30), random.randrange(10, 30))
     )
+
 c.executemany('INSERT INTO sensor_data VALUES (?,?,?)', records)
