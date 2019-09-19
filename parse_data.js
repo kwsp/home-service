@@ -1,17 +1,10 @@
 const fs = require('fs');
-const util = require('util');
 const atob = require('atob');
-//const d3 = require('d3');
 const moment = require('moment');
 const struct = require('./struct.js').struct;
-const readFile = util.promisify(fs.readFile);
-const readdir = util.promisify(fs.readdir);
 
 
 const dataStruct = struct("<IfI");
-//const dateFormat = d3.timeFormat('%B %d %Y %H:%M:%S');
-//const dateFormat = d3.timeFormat('%YY%MM%d %H:%M');
-//const dateFormatShort = d3.timeFormat('%H:%M');
 
 // Parse a single base64 ecoded line of data
 function parseDataLine(line) {
