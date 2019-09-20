@@ -122,7 +122,7 @@
                       <div class="h5 mb-0 font-weight-bold text-light" id="activityStatus">0</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      <i class="fas fa-lightbulb fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -135,7 +135,6 @@
           <div class="row">
 
             <!-- Temperature Chart -->
-<!--            TODO: Fix the height of area plots-->
             <div class="col-lg-6">
               <div class="card mb-4" id="temperaturePlot">
                 <!-- Card Header -->
@@ -143,8 +142,8 @@
                   <h6 class="m-0 font-weight-bold text-yellow">Room temperature in the past 24 hours</h6>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area pt-4 pb-2">
+                <div class="card-body p-0.5">
+                  <div class="chart-area">
                     <canvas id="graphTemperature"></canvas>
                   </div>
                 </div>
@@ -156,10 +155,10 @@
               <div class="card mb-4" id="activityPlot">
                 <!-- Card Header -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-yellow">Activity Chart</h6>
+                  <h6 class="m-0 font-weight-bold text-yellow">Activity in the past 24 hours</h6>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body p-0.5">
                   <div class="chart-area">
                     <canvas id="graphActivity"></canvas>
                   </div>
@@ -219,9 +218,9 @@
                     an accelerometer to monitor activity (which, as you'd imagine, 
                     is basically a very good random number generator). 
                   </p>
-                  <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="static/img/undraw_report_mx0a.svg" alt="">
-                  </div>
+                  <!--<div class="text-center">-->
+                    <!--<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="static/img/undraw_report_mx0a.svg" alt="">-->
+                  <!--</div>-->
                   <p class="mb-0">
                     The front end is built with <a href="https://getbootstrap.com">Bootstrap</a> and 
                     <a href="https://jquery.com">jQuery</a> based on my modified version of the 
@@ -229,8 +228,8 @@
                     theme. The backend is built with <a href="https://nodejs.org">Node.js</a> and 
                     <a href="https://socket.io">Socket.io</a>, while data is stored in a 
                     <a href="https://www.sqlite.org">SQLite</a> database. The server is hosted with 
-                    <a href="https://www.nginx.com">NGINX</a> on a Raspberry Pi 3B+ in my bedroom, 
-                    which also controls the sensors through an Arduino. In the future I will implement 
+                    <a href="https://www.nginx.com">NGINX</a> on a <a href="https://www.raspberrypi.org/">
+                    Raspberry Pi 3B+</a> in my bedroom, which also controls the sensors through an Arduino. In the future I will implement 
                     the MQTT protocol to communicate with multiple IoT devices. </p>
                 </div>
               </div>
