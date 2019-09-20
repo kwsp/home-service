@@ -37,7 +37,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
               <i class="fas fa-seedling"></i>
             </div>
-            <div class="h3 mb-0 mx-3">Tiger IoT <sup>2</sup> <span class="text-yellow">Dashboard</span></div>
+            <div class="h3 mb-0 mx-3">Tiger IoT <span class="text-yellow">Dashboard</span></div>
           </a>
 
         </nav>
@@ -136,9 +136,9 @@
 
             <!-- Temperature Chart -->
 <!--            TODO: Fix the height of area plots-->
-            <div class="col-xl-8 col-lg-6">
+            <div class="col-lg-6">
               <div class="card mb-4" id="temperaturePlot">
-                <!-- Card Header - Dropdown -->
+                <!-- Card Header -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-yellow">Room temperature in the past 24 hours</h6>
                 </div>
@@ -151,10 +151,31 @@
               </div>
             </div>
               
+            <!-- Activity Chart -->
+            <div class="col-lg-6">
+              <div class="card mb-4" id="activityPlot">
+                <!-- Card Header -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-yellow">Activity Chart</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="graphActivity"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+            
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-6">
               <div class="card mb-4" id="pieCard">
-                <!-- Card Header - Dropdown -->
+                <!-- Card Header -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-yellow">Language Breakdown</h6>
                 </div>
@@ -180,65 +201,9 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Content Row -->
-          <div class="row">
             
-            <!-- Activity Chart -->
-            <div class="col-lg-6">
-              <div class="card mb-4" id="activityPlot">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-yellow">Activity Chart</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="graphActivity"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content Column -->
-            <div class="col-lg-6">
-              <!-- Project Card Example -->
-              <div class="card mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-yellow">Projects</h6>
-                </div>
-                <div class="card-body">
-                  <h4 class="small font-weight-bold">Raspberry Pi + Nginx + Arduino + MQTT<span class="float-right">20%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Python3 + SQLite<span class="float-right">40%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Node.js + Socket.io <span class="float-right">60%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Bootstrap + Chart.js + jQuery<span class="float-right">80%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Tiger IoT <span class="float-right">Complete!</span></h4>
-                  <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Content Row -->
-          <div class="row">
-            <!-- Content Column -->
-            <div class="col-lg-6">
-              <!-- Approach -->
+           <!-- Approach -->
+            <div class="col-xl-8 col-lg-6">
               <div class="card mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-yellow">Development Approach</h6>
@@ -323,7 +288,7 @@
       setInterval(function() {
       $("#updateTime").html((new Date()).toLocaleTimeString());}, 1000);
     
-//    Update progress bar
+      // Update progress bar
       var scale = 17.7;
       var progress = 13.7/17.7;
       var left = Math.floor(scale - (progress * scale)) + " billion years  ";
