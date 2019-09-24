@@ -34,6 +34,8 @@ if not serialPortFound:
 def getData():
     dev.flushInput()
     dev.write(str.encode('?\n'))
-    raw = dev.readline().decode().strip()
-    dev.write(str.encode('?\n'))
     return dev.readline().decode().strip()
+
+if __name__ == "__main__":
+    x = getData()
+    print(x)
