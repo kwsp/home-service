@@ -32,10 +32,14 @@ if not serialPortFound:
 
 
 def getData():
-    dev.flushInput()
-    dev.write(str.encode('?\n'))
-    return dev.readline().decode().strip()
+    res = ""
+    while res == "":
+        dev.flushInput()
+        dev.write(str.encode('?\n'))
+        res = dev.readline().decode().strip()
+    return res
 
 if __name__ == "__main__":
     x = getData()
     print(x)
+    import pdb; pdb.set_trace()
