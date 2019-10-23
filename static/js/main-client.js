@@ -19,8 +19,8 @@ $(function() {
     document.getElementById('activityStatus').innerHTML = str;
 
     // Update plots
-    areaPlot('graphTemperature', sensorData.time, sensorData.temperature, 'Temperature')
-    areaPlot('graphActivity', sensorData.time, sensorData.activity, 'Activity')
+    areaPlot('graphTemperature', sensorData.time, sensorData.temperature, 'Temperature (°C)')
+    areaPlot('graphActivity', sensorData.time, sensorData.activity, 'Activity (count)')
 
     // Acknowledge data to the server
     socket.emit('acknowledge-data', { my:'index.html received data!'});

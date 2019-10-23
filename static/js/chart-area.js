@@ -37,9 +37,9 @@ function areaPlot(id, xlabel, ydata, label) {
       maintainAspectRatio: false,
       layout: {
         padding: {
-          left: 10,
-          right: 25,
-          top: 25,
+          left: 5,
+          right: 5,
+          top: 10,
           bottom: 0
         }
       },
@@ -61,6 +61,12 @@ function areaPlot(id, xlabel, ydata, label) {
         }],
         
         yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: label,
+            fontColor: "rgb(234, 236, 244)",
+            fontSize: 14
+          },
           ticks: {
             maxTicksLimit: 5,
             padding: 10,
