@@ -300,27 +300,25 @@
 
   <!-- Update the current time-->
   <script type="text/javascript">
+    $("div.currentDate").html(moment(new Date()).format('MMMM DD, YYYY'));
+    $("#updateTime").html((new Date()).toLocaleTimeString());
     
-      $("div.currentDate").html(moment(new Date()).format('MMMM DD, YYYY'));
-      $("#updateTime").html((new Date()).toLocaleTimeString());
-      
-      setInterval(function() {
-      $("#updateTime").html((new Date()).toLocaleTimeString());}, 1000);
-    
-      // Update progress bar
-      var scale = 17.7;
-      var progress = 13.7/17.7;
-      var left = Math.floor(scale - (progress * scale)) + " billion years  ";
-      var progress = progress * 100;
+    setInterval(function() {
+    $("#updateTime").html((new Date()).toLocaleTimeString());}, 1000);
+  
+    // Update progress bar
+    var scale = 17.7;
+    var progress = 13.7/17.7;
+    var left = Math.floor(scale - (progress * scale)) + " billion years  ";
+    var progress = progress * 100;
 
-      $('.collisionBar').css('width', progress+'%').attr('aria-valuenow', progress);
-      $('.collisionText').html(left);
+    $('.collisionBar').css('width', progress+'%').attr('aria-valuenow', progress);
+    $('.collisionText').html(left);
   </script>
 
   <!-- Page level custom scripts -->
   <script src="static/js/chart-area.js"></script>
   <script src="static/js/chart-pie.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
   <script src="static/js/main-client.js"></script>
   <script src="static/js/mixin.js"></script>
 </body>
