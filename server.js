@@ -39,7 +39,7 @@ io.on('connection', function(socket) {
                 temperature: [],
                 activity: [],
             };
-            db.each("SELECT timestamp, temperature, activity FROM sensor_data ORDER BY timestamp DESC LIMIT 1000",
+            db.each("SELECT timestamp, temperature, activity FROM sensor_data ORDER BY timestamp DESC LIMIT 1500",
                 function (err, row) {
                     if (err) { console.error(err.message); }
                     
