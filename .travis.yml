@@ -1,7 +1,8 @@
 language: node_js
 node_js:
-   - 7
-
+- 13
+env:
+- NODE_ENV=TEST
 before_script:
-   - npm install
+- npm install
 
