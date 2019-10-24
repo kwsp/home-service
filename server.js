@@ -2,6 +2,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const moment = require('moment');
 const uuidv1 = require('uuid/v1')
+const compression = require('compression')
+const helmet = require('helmet')
 
 const express = require('express')
 const session = require('express-session')
@@ -17,12 +19,14 @@ let db = new sqlite3.Database('data/tiger-home.db', (err) => {
     console.log('Connected to the SQlite database.');
 });
 
+app.use(express.static(__dirname));
+app.use(helmet())
+app.use(compression())
 
 // Initialise https Server and home page
 http.listen(6969, function() {
     console.log('listening on *:6969')
 });
-app.use(express.static(__dirname));
 
 function parseDB(count) {
     return new Promise(function(resolve, reject) {
