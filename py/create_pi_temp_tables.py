@@ -15,4 +15,3 @@ c.execute("SELECT * FROM pi_temp")
 temp = c.fetchall()
 print("Currently pi_temp has: ")
 print(temp)
-

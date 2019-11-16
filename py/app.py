@@ -1,4 +1,4 @@
-
+import time
 import sqlite3
 from flask import Flask, jsonify
 from flask import make_response
@@ -23,23 +23,72 @@ class SensorData(Resource):
                 cursor = connection.cursor()
                 cursor.execute('''
                 SELECT timestamp, temperature, activity FROM sensor_data
-                ORDER BY timestamp DESC LIMIT {}
-                '''.format(n_points))
+                ORDER BY timestamp DESC LIMIT {}'''.format(n_points))
                 data = cursor.fetchall()
                 timestamp = [tup[0] for tup in data]
                 temperature = [tup[1] for tup in data]
                 activity = [tup[2] for tup in data]
-                res = {'timestamp': timestamp,
-                       'temperature': temperature, 'activity': activity}
                 cursor.close()
         except sqlite3.OperationalError:
             return {"error": "Querry failed"}
 
-        return jsonify(res)
+        return {'timestamp': timestamp,
+                'temperature': temperature,
+                'activity': activity}
 
 
 class PiTemp(Resource):
-    pass
+    def get(self):
+        data = parser.parse_args()
+        n_points = data.get('n')
+        if n_points is None:
+            n_points = 1000
+
+        try:
+            with get_db() as connection:
+                cursor = connection.cursor()
+                cursor.execute('''
+                SELECT name, timestamp, temperature FROM pi_temp
+                ORDER BY timestamp DESC LIMIT {}'''.format(n_points))
+                data = cursor.fetchall()
+                cursor.close()
+        except sqlite3.OperationalError:
+            return {"error": "Querry failed"}
+
+        names = set(v[0] for v in data)
+        res = {}
+        for name in names:
+            timestamp = [v[1] for v in data if v[0] == name]
+            temperature = [v[2] for v in data if v[0] == name]
+            res[name] = {'timestamp': timestamp, 'temperature': temperature}
+        return res
+
+    def post(self):
+        parser.add_argument('name', type=str)
+        parser.add_argument('temperature', type=float)
+        args = parser.parse_args()
+        name = args["name"]
+        temperature = args["temperature"]
+        timestamp = int(time.time())
+
+        if name is None or temperature is None:
+            return {"error": "Missing arguments"}
+
+        try:
+            with get_db() as connection:
+                cursor = connection.cursor()
+                cursor.execute('''
+                INSERT INTO pi_temp
+                VALUES (?,?,?)''', (name, timestamp, temperature))
+                cursor.close()
+        except sqlite3.OperationalError:
+            return {"error": "Querry failed"}
+
+        return {
+            'status': True,
+            'name': args['name'],
+            'temperature': args['temperature']
+        }
 
 
 def create_app():
